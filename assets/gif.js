@@ -7,7 +7,7 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
 // Step 1: loops & add buttons to the html dynamically 
     // declare function renderButtons
     function renderButtons(){
-        // Use _.each() built-in function to loop through array
+        // Use .forEach() built-in function to loop through array
         // Loop through each index in the array
         $("#user-buttons").empty();
         favThings.forEach(function(el) {
@@ -18,16 +18,16 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
             // .addClass of button to arrButtons
             arrButtons.addClass("button");
             // add text
-            arrButtons.html(el)
+            arrButtons.html(el);
             // append to div id #user-buttons
             $("#user-buttons").append(arrButtons);
         });
     };
-    renderButtons();
+
     
 function getData(topics){
 // declare var URL & set equal to giphy api + parameter in function + ?app_id=favGifs
-    let queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en" + topics;
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en" + topics;
     // ajax call
     $.ajax({
         url: queryURL,
@@ -42,4 +42,7 @@ function getData(topics){
     
 }
 
+$(document).on("click", "#submit", function()
+renderButtons();
 getData();
+
