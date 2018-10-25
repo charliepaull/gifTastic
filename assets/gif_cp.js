@@ -23,9 +23,10 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
         });
     };
 
-renderButtons();    
 
-function buttonOnClick() {
+    
+// create a function called buttonOnClick to wrap later call the on.click function
+function buttonOnClick(){
 // create an on-click function
 $("button").on("click", function(){
     // declare var topics & grab data from buttons
@@ -44,12 +45,12 @@ $("button").on("click", function(){
     // declare var results & set to response object
         var result = response.data;
         // make for loop 
-        
+        for (i = 0; i < results.length; i++){
+            
+        }
     });
 });
-}
+};
 
+renderButtons();
 buttonOnClick();
-
-
-
