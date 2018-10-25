@@ -15,7 +15,7 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
             // .addClass of button to arrButtons
             arrButtons.addClass("button");
             // add attr
-            arrButtons.attr("things", favThings[i]);
+            arrButtons.attr("data-topics", arrButtons);
             // add text
             arrButtons.html(el);
             // append to div id #user-buttons
@@ -27,7 +27,7 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
 // create an on-click function
 $("button").on("click", function(){
     // declare var topics & grab data from buttons
-    var topics = $(this).attr("things")
+    var topics = $(this).attr("data-topics")
     // declare variable queryURL & add api link
     var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en";
 
@@ -36,12 +36,15 @@ $("button").on("click", function(){
         url: queryURL,
         method: "GET"
     // call back function to GET response object
-    }).then(function(response) {
+    }).then(function(response){
+    // console.log response to check if object works
         console.log(response);
-
     // declare var results & set to response object
         var result = response.data;
+        // make for loop 
         
-    })
+    });
 });
+
+
 renderButtons();
