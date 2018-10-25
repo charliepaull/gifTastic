@@ -1,13 +1,10 @@
-//declare var myFavThings & create array w/ strings (for buttons on page)
+// Declare var myFavThings & create array w/ 7 indicies
 var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight"]
 
-// // Goal: Grab Data from API giphy site
-// // declare a function & name it getData
-
-// Step 1: loops & add buttons to the html dynamically 
+// Step 1: loops & add buttons to the browser dynamically 
     // declare function renderButtons
     function renderButtons(){
-        // Use .forEach() built-in function to loop through array
+        // Use for loop to loop through array
         // Loop through each index in the array
         $("#user-buttons").empty();
         favThings.forEach(function(el) {
@@ -17,32 +14,34 @@ var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger b
             var arrButtons = $("<button>")
             // .addClass of button to arrButtons
             arrButtons.addClass("button");
+            // add attr
+            arrButtons.attr("things", favThings[i]);
             // add text
             arrButtons.html(el);
             // append to div id #user-buttons
             $("#user-buttons").append(arrButtons);
         });
     };
-
     
-function getData(topics){
-// declare var URL & set equal to giphy api + parameter in function + ?app_id=favGifs
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en" + topics;
+
+// create an on-click function
+$("button").on("click", function(){
+    // declare var topics & grab data from buttons
+    var topics = $(this).attr("things")
+    // declare variable queryURL & add api link
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en";
+
     // ajax call
     $.ajax({
         url: queryURL,
         method: "GET"
     // call back function to GET response object
     }).then(function(response) {
-        let result = response.data
-        console.log(result)
+        console.log(response);
+
+    // declare var results & set to response object
+        var result = response.data;
         
     })
-
-    
-}
-
-$(document).on("click", "#submit", function()
+});
 renderButtons();
-getData();
-
