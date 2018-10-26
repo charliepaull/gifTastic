@@ -1,5 +1,5 @@
 // Declare var myFavThings & create array w/ 7 indicies
-var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight", "Daisey Ridley"];
+var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Kenneth Branagh Hamlet", "Barack Obama", "Dark Knight", "Daisey Ridley"];
 
 // Step 1: loops & add buttons to the browser dynamically 
 // declare function renderButtons
@@ -84,11 +84,21 @@ $(document).on("click", ".button", function(){
             // declare var rating & store rating from response object
             var rating = result[i].rating;
             // declare var p & dynamically create p tag that holds gif rating
-            var p = $("<p>").text(rating);
+            var p = $("<p>").text("Rating: " + rating);
             // declare var gifImg & dynamically create img tag, holds gif url
             var gifImg = $("<img>");
-            // grab img url from response object & add src attritube, all set to gifImg
-            gifImg.attr("src", result[i].images.fixed_height.url);
+            // add class to img tag
+            gifImg.addClass("giphy");
+            // grab still img url from response object & add src attritube, all set to gifImg
+            gifImg.attr("src", result[i].images.fixed_height_still.url);
+            // add attr to data-still & grab url as value (still img)
+            gifImg.attr("data-still", result[i].images.fixed_height_still.url);
+            // add attr data-state as "still"
+            gifImg.attr("data-state", "still");
+            // add attr data-state as "animate"
+            gifImg.attr("data-animate", result[i].images.fixed_height.url);
+            // add attr data-state as "animate"
+            gifImg.attr("data-state", "animate");
 
             // append p & gifImg tags to parent div (gifDiv)
             gifDiv.append(p, gifImg);
@@ -98,7 +108,23 @@ $(document).on("click", ".button", function(){
 
            
         }
+
         
         
     });
+});
+
+// Goal: still/animate gifs
+// select class .button & create an on.click function
+$(".giphy").on("click", function(){
+    // declare var state & call button using this, then select "data-state"
+    var state = $(this).attr("data-state");
+    // set state of gif to still
+    if (state === "still"){
+        $(this).attr("src", $(this).attr("data-animate",));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
 });
