@@ -1,5 +1,5 @@
 // Declare var myFavThings & create array w/ 7 indicies
-var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight"]
+var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight", "Daisey Ridley"];
 
 // Step 1: loops & add buttons to the browser dynamically 
 // declare function renderButtons
@@ -21,35 +21,61 @@ function renderButtons(){
     };
 };
 
-$("#submit").event.preventDefault();
-
-
-$("#gifs-appear-here").val("");
-
 renderButtons();
+
 
 // Goal: Add button through user input & submit button
 // declare function & name addButton
 function addButton(){
-    // Select #submit ID & make a callback function with parameter event
+    // Select #submit ID & make a callback function (set parameter as event)
     $("#submit").on("click", function(event){
     // use event.preventDefault() to stop form from submitting
         event.preventDefault();
+        // declare var uniqueArr  & use $.unique jQuery method to sort out duplicates 
+        // var uniqueArr = $.unique(favThings.sort()).sort();
+        // if (uniqueArr === favThings){
+        //     return uniqueArr
+        // } else{        
+        // declare var input & capture value of user input from search box 
+        var input = $("#search").val().trim();
 
-        var input
+        // Make empty unique array
+        uniqueArr = {};
+        // Create IF statement & alert user if no value added to input
+        if (!input){
+            input = "";
+            alert("Add your giphy category!");
+            return
+        };
+        
+        dupe = uniqueArr.input;
+        // create for loop
+        for (i=0; i<favThings.length; i++){
+            // if item in favThing equals dupe (item repeats)
+            if(favThings[i].input === dupe){
+                return
+            }
+        };
+        // push value from input into favThings array
+        favThings.push(favThings);
+        JSON.stringify(favThings);
+        // call function renderButtons to append user search to array  
+        renderButtons();
+        // }
     });
 }
 
+addButton();
 
-function buttonOnClick() {
+// function buttonOnClick() {
 // create an on-click function
-$("button").on("click", function(){
+$(document).on("click", ".button", function(){
     // empty the gifDiv to reset
     $("#gifs-appear-here").empty();
     // declare var topics & grab data from buttons
     var topics = $(this).attr("data-topics")
     // declare variable queryURL & add api link
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=PG-13&lang=en";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=61P15eC1j1CkjvZZBJEBRM2dyPDBtMqL&q=" + topics + "&limit=10&offset=0&rating=R&lang=en";
 
     // ajax call
     $.ajax({
@@ -80,15 +106,9 @@ $("button").on("click", function(){
             // prepend
             $("#gifs-appear-here").prepend(gifDiv);
 
-            
-
-            
-            
+           
         }
         
         
     });
 });
-};
-
-buttonOnClick();
