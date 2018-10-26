@@ -1,33 +1,51 @@
 // Declare var myFavThings & create array w/ 7 indicies
-var favThings = ["Seinfeld", "golden doodles", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight"]
+var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Hamlet", "Barack Obama", "Dark Knight"]
 
 // Step 1: loops & add buttons to the browser dynamically 
-    // declare function renderButtons
-    function renderButtons(){
-        // Use for loop to loop through array
-        // Loop through each index in the array
-        $("#user-buttons").empty();
-        favThings.forEach(function(el) {
-        // console.log() el to display object
-            console.log(el);
-            // declare var arrButtons
-            var arrButtons = $("<button>")
-            // .addClass of button to arrButtons
-            arrButtons.addClass("button");
-            // add attr
-            arrButtons.attr("data-topics", arrButtons);
-            // add text
-            arrButtons.html(el);
-            // append to div id #user-buttons
-            $("#user-buttons").append(arrButtons);
-        });
+// declare function renderButtons
+function renderButtons(){
+    // Use for loop to loop through array
+    // Loop through each index in the array
+    $("#user-buttons").empty();
+    for (var i = 0; i < favThings.length; i++) {
+        // declare var arrButtons
+        var arrButtons = $("<button>");
+        // .addClass of button to arrButtons
+        arrButtons.addClass("button");
+        // add attr
+        arrButtons.attr("data-topics", favThings[i]);
+        // add text
+        arrButtons.text(favThings[i]);
+        // append to div id #user-buttons
+        $("#user-buttons").append(arrButtons);
     };
+};
 
-renderButtons();    
+$("#submit").event.preventDefault();
+
+
+$("#gifs-appear-here").val("");
+
+renderButtons();
+
+// Goal: Add button through user input & submit button
+// declare function & name addButton
+function addButton(){
+    // Select #submit ID & make a callback function with parameter event
+    $("#submit").on("click", function(event){
+    // use event.preventDefault() to stop form from submitting
+        event.preventDefault();
+
+        var input
+    });
+}
+
 
 function buttonOnClick() {
 // create an on-click function
 $("button").on("click", function(){
+    // empty the gifDiv to reset
+    $("#gifs-appear-here").empty();
     // declare var topics & grab data from buttons
     var topics = $(this).attr("data-topics")
     // declare variable queryURL & add api link
@@ -41,15 +59,36 @@ $("button").on("click", function(){
     }).then(function(response){
     // console.log response to check if object works
         console.log(response);
-    // declare var results & set to response object
+    // declare var result & set to response object
         var result = response.data;
-        // make for loop 
+        // make for loop - looping through 10 gifs to add to browser
+        for (var i = 0; i < result.length; i++){
+        // dynamically create parent div - will later append p & img tags
+            var gifDiv = $("<div>");
+            // declare var rating & store rating from response object
+            var rating = result[i].rating;
+            // declare var p & dynamically create p tag that holds gif rating
+            var p = $("<p>").text(rating);
+            // declare var gifImg & dynamically create img tag, holds gif url
+            var gifImg = $("<img>");
+            // grab img url from response object & add src attritube, all set to gifImg
+            gifImg.attr("src", result[i].images.fixed_height.url);
+
+            // append p & gifImg tags to parent div (gifDiv)
+            gifDiv.append(p, gifImg);
+
+            // prepend
+            $("#gifs-appear-here").prepend(gifDiv);
+
+            
+
+            
+            
+        }
+        
         
     });
 });
-}
+};
 
 buttonOnClick();
-
-
-
