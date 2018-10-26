@@ -31,39 +31,29 @@ function addButton(){
     $("#submit").on("click", function(event){
     // use event.preventDefault() to stop form from submitting
         event.preventDefault();
-        // declare var uniqueArr  & use $.unique jQuery method to sort out duplicates 
-        // var uniqueArr = $.unique(favThings.sort()).sort();
-        // if (uniqueArr === favThings){
-        //     return uniqueArr
-        // } else{        
         // declare var input & capture value of user input from search box 
         var input = $("#search").val().trim();
 
-        // Make empty unique array
-        uniqueArr = {};
-        // Create IF statement & alert user if no value added to input
+        // declare var compare & use $.inArray method to check if string value is already in array
+        var compare = $.inArray(input, favThings);
+        // create IF statement for logic (empty string, duplicate, new value)
+        // no string value entered by user
         if (!input){
-            input = "";
             alert("Add your giphy category!");
             return
+        // compare find the string value already in array
+        } else if (compare === (-1)) {
+            // call function renderButtons to append user search to array  
+            // renderButtons();
+            // push value from input into favThings array
+            favThings.push(input);
+        } else {
+            // alert("already a topic!")
+            return;
         };
-        
-        dupe = uniqueArr.input;
-        // create for loop
-        for (i=0; i<favThings.length; i++){
-            // if item in favThing equals dupe (item repeats)
-            if(favThings[i].input === dupe){
-                return
-            }
-        };
-        // push value from input into favThings array
-        favThings.push(favThings);
-        JSON.stringify(favThings);
-        // call function renderButtons to append user search to array  
         renderButtons();
-        // }
     });
-}
+    };
 
 addButton();
 
