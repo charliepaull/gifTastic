@@ -126,5 +126,4 @@ $(document).on("click", ".giphy", function() {
          $(this).attr("src", $(this).attr("data-still"));
          $(this).attr("data-state", "still");
      }
-     console.log("hi");
 });
