@@ -114,18 +114,17 @@ $(document).on("click", ".button", function(){
     });
 });
 
-// Goal: still/animate gifs
-// select class .button & create an on.click function
-$(".giphy").on("click", function(){
-    // // declare var state & call button using this, then select "data-state"
-    // var state = $(this).attr("data-state");
-    // // set state of gif to still
-    // if (state === "still"){
-    //     $(this).attr("src", $(this).attr("data-animate",));
-    //     $(this).attr("data-state", "animate");
-    // } else {
-    //     $(this).attr("src", $(this).attr("data-still"));
-    //     $(this).attr("data-state", "still");
-    // }
-    console.log("hi");
+
+$(document).on("click", ".giphy", function() {
+     // declare var state & call button using this, then select "data-state"
+     var state = $(this).attr("data-state");
+     // set state of gif to still
+     if (state === "still"){
+         $(this).attr("src", $(this).attr("data-animate",));
+         $(this).attr("data-state", "animate");
+     } else {
+         $(this).attr("src", $(this).attr("data-still"));
+         $(this).attr("data-state", "still");
+     }
+     console.log("hi");
 });
