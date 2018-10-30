@@ -1,7 +1,7 @@
 // Declare var myFavThings & create array w/ 7 indicies
 var favThings = ["Seinfeld", "golden retrievers", "Curb Your Enthusiasm", "Dodger baseball", "Kenneth Branagh Hamlet", "Barack Obama", "Dark Knight", "Daisey Ridley"];
 
-// Step 1: loops & add buttons to the browser dynamically 
+// Goal: loops & add buttons to the browser dynamically 
 // declare function renderButtons
 function renderButtons(){
     // Use for loop to loop through array
@@ -14,7 +14,7 @@ function renderButtons(){
         arrButtons.addClass("button");
         // add attr
         arrButtons.attr("data-topics", favThings[i]);
-        // add text
+        // add text to browser
         arrButtons.text(favThings[i]);
         // append to div id #user-buttons
         $("#user-buttons").append(arrButtons);
@@ -48,7 +48,7 @@ function addButton(){
             // push value from input into favThings array
             favThings.push(input);
         } else {
-            // alert("already a topic!")
+            // exit function, category already exists
             return;
         };
         renderButtons();
@@ -57,8 +57,7 @@ function addButton(){
 
 addButton();
 
-// function buttonOnClick() {
-// create an on-click function
+// create an on-click function (useing document) as selector
 $(document).on("click", ".button", function(){
     // empty the gifDiv to reset
     $("#gifs-appear-here").empty();
@@ -71,7 +70,7 @@ $(document).on("click", ".button", function(){
     $.ajax({
         url: queryURL,
         method: "GET"
-    // call back function to GET response object
+    // callback function to GET response object
     }).then(function(response){
     // console.log response to check if object works
         console.log(response);
@@ -88,17 +87,15 @@ $(document).on("click", ".button", function(){
             // declare var gifImg & dynamically create img tag, holds gif url
             var gifImg = $("<img>");
             // add class to img tag
-            gifImg.attr("src", result[i].images.fixed_height_still.url);
-            // add attr to data-still & grab url as value (still img)
             gifImg.addClass("giphy");
-            // add attr  to data-animate & grab url as value (animate img)
+            // add attr to gifImg & grab url as value (still img)
+            gifImg.attr("src", result[i].images.fixed_height_still.url);
+            // add attr of data-animate & grab url as value (animate img)
             gifImg.attr("data-animate", result[i].images.fixed_height.url);
-            // grab still img url from response object & add src attritube, all set to gifImg
+            // grab still img url from response object & add data-still attr, all set to gifImg
             gifImg.attr("data-still", result[i].images.fixed_height_still.url);
             // add attr data-state as "still"
             gifImg.attr("data-state", "still");
-            // add attr data-state as "animate"
-            // gifImg.attr("data-state", "animate");
 
             // append p & gifImg tags to parent div (gifDiv)
             gifDiv.append(p, gifImg);
@@ -116,13 +113,15 @@ $(document).on("click", ".button", function(){
 
 
 $(document).on("click", ".giphy", function() {
-     // declare var state & call button using this, then select "data-state"
+     // declare var state & call dynamic button using this, then select "data-state"
      var state = $(this).attr("data-state");
-     // set state of gif to still
+     // check if set to still
      if (state === "still"){
+    // if true, set gifImg to animate
          $(this).attr("src", $(this).attr("data-animate",));
          $(this).attr("data-state", "animate");
      } else {
+    // if false, set gifImg to still
          $(this).attr("src", $(this).attr("data-still"));
          $(this).attr("data-state", "still");
      }
